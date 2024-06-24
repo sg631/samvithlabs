@@ -1,7 +1,8 @@
 .main-navbar1-option {
-  text-style: none;
+  text-decoration: none;
   color: rgb(255, 255, 255);
   font-size: 30px;
+  padding: 10px;
 }
 #main-navbar1-container {
   width: 100%;
