@@ -8,6 +8,29 @@
   </head>
   <body>
     <script src="mainscript.js"></script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAn4aQ3IIFuinZ2YObLwznBcxC5b7-v4C8",
+    authDomain: "samvith-labs-test.firebaseapp.com",
+    projectId: "samvith-labs-test",
+    storageBucket: "samvith-labs-test.appspot.com",
+    messagingSenderId: "824034847297",
+    appId: "1:824034847297:web:0ac62ae953c74bb20774c0",
+    measurementId: "G-E3HV9K8PWZ"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
     <div id="main-navbar1-container">
       <a class="main-navbar1-option" href="https://learn4thegame.github.io">game2play</a>
     </div>
