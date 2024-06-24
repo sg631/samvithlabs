@@ -1,5 +1,7 @@
 .main-navbar1-option {
   text-style: none;
+  color:white;
+  font-fize: 30px;
 }
 #main-navbar1-container {
   width: 100%;
@@ -8,4 +10,8 @@
 }
 body {
   background-color: rgb(40, 40, 40);
+}
+html {
+  color:white;
+  font-family: sans-serif;
 }
