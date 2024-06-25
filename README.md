@@ -1,7 +1,5 @@
 <h1>SamvithLabs</h1>
-No, this is not science related.
-<br>
-No, this is not about labs as in the dogs.
+This is my showcase and website for everything that I do.
 <br>
 It is called SamvithLabs because it is a place to showcase my servers, projects, music, games, and expiriments. You can visit it at https://samvithlabs.com.
 <h2>Website Parts</h2>
