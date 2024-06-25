@@ -10,5 +10,7 @@ This takes you to https://game2study.com, the site for my project that aims to m
 <hr>
 <h3>Play</h3>
 This takes you to my subdomain reserved for hosting my videogame servers for Rust, Minecraft, and more.
+<hr>
 <h3>Music</h3>
 This is where you can access my music.
+<hr>
