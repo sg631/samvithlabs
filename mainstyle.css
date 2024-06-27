@@ -1,11 +1,26 @@
+html {
+  color:white;
+  font-family: sans-serif;
+}
 .main-navbar1-option {
+  top:5px;
+  position: relative;
+  width:150px;
+  height:40px;
+  background-color: rgb(30, 30, 30);
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+}
+.main-navbar1-option-link {
   text-decoration: none;
   color: rgb(255, 255, 255);
   font-size: 20px;
-  padding: 10px;
+  padding:5px;
 }
 .main-navbar1-option:hover {
   text-decoration: underline 3px white;
+  background-color: rgb(40, 40, 40);
 }
 #main-navbar1-container {
   width: 100%;
@@ -14,11 +29,8 @@
   position: fixed;
   left: 0px;
   top: 0px;
+  text-align: center;
 }
 body {
   background-color: rgb(40, 40, 40);
-}
-html {
-  color:white;
-  font-family: sans-serif;
 }
