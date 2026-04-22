@@ -1,41 +1,97 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>
-      Samvith Labs
-    </title>
-    <link rel=stylesheet href="mainstyle.css" />
-    <link rel="icon" type="image/x-icon" href="samvithlabs-nobg.ico" />
-  </head>
-  <body>
-    <script src="mainscript.js"></script>
-    <div id="main-navbar1-container">
-      <button class="main-navbar1-option">
-        <a class="main-navbar1-option-link" href="../">
-          home
-        </a>
-      </button>
-      <button class="main-navbar1-option">
-        <a class="main-navbar1-option-link" href="../music">
-          my music
-        </a>
-      </button>
-      <button class="main-navbar1-option">
-        <a class="main-navbar1-option-link" href="../games">
-          my games
-        </a>
-      </button>
-      <button class="main-navbar1-option">
-        <a class="main-navbar1-option-link" href="../projects">
-          my projects
-        </a>
-      </button>
-      <button class="main-navbar1-option">
-        <a class="main-navbar1-option-link" href="https://game2study.com">
-          game2study
-        </a>
-      </button>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samvith Labs</title>
+  <link rel="stylesheet" href="mainstyle.css" />
+  <link rel="icon" type="image/x-icon" href="samvithlabs-nobg.ico" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <div id="nav-logo">Samvith Labs</div>
+    <div id="nav-links">
+      <a href="#links">Links</a>
+      <a href="#work">Work</a>
     </div>
-    <img src="samvithlabs-banner.png" style="width:100%" draggable="false">
-  </body>
+    <button id="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+
+  <header id="hero">
+    <img src="samvithlabs.png" alt="Samvith Labs logo" id="hero-logo" />
+    <h1>Samvith Labs</h1>
+    <p>Building games, music, and projects.</p>
+  </header>
+
+  <main>
+
+    <section id="links">
+      <h2>Links</h2>
+      <p>Fair warning: some of these are really outdated or old.</p>
+      <br>
+      <div class="card-grid">
+
+        <a class="card" href="https://github.com/samvithlabs" target="_blank">
+          <div class="card-icon"><img src="github.svg" alt="GitHub logo" width="40" height="40" style="background-color: white; border-radius: 100%;" /></div>
+          <h3>sg631</h3>
+          <p>My work, projects, and other repositories.</p>
+        </a>
+
+        <a class="card" href="https://spotify.com/user/samvithlabs" target="_blank">
+          <div class="card-icon"><img src="spotify.png" alt="Spotify logo" width="40" height="40" /></div>
+          <h3>smv1t</h3>
+          <p>Latest music under artist <code>smv1t</code></p>
+        </a>
+
+        <a class="card" href="https://skillmesa.com/profile/ub5rO1uoX6TxhT33CWhKSF8P9dt2" target="_blank">
+          <div class="card-icon"><img src="skillmesa-small.svg" alt="Skillmesa logo" width="40" height="40" /></div>
+          <h3>samvithlabs</h3>
+          <p>My Skillmesa profile (see below)</p>
+        </a>
+
+        <a class="card" href="https://www.youtube.com/@samvithlabs" target="_blank">
+          <div class="card-icon"><img src="youtube.svg" alt="YouTube logo" width="40" height="40" /></div>
+          <h3>@samvithlabs</h3>
+          <p>My YouTube channel</p>
+        </a>
+
+        <a class="card" href="https://samvithlabs.itch.io/" target="_blank">
+          <div class="card-icon"><img src="itchio.png" alt="itch.io logo" width="40" height="40" /></div>
+          <h3>samvithlabs</h3>
+          <p>My itch.io page</p>
+        </a>
+
+      </div>
+    </section>
+
+    <section id="work">
+      <h2>My Work</h2>
+      <div class="card-grid">
+
+        <a class="card" href="https://skillmesa.com/" target="_blank">
+          <div class="card-icon"><img src="skillmesa-small.svg" alt="Skillmesa logo" width="40" height="40" /></div>
+          <h3>Skillmesa</h3>
+          <p>An app for anyone, but especially teenagers and others who don't have an easy outlet, to publicize their services. Anything from tutoring to lawn mowing, this is your place.</p>
+          <button>explore this!</button>
+        </a>
+
+        <a class="card" href="#" target="_blank">
+          <div class="card-icon">🛠️</div>
+          <h3>Coming soon..</h3>
+          <p>Not much is here yet, and I have to update this site, but soon there will be more.</p>
+          
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Samvith Labs</p>
+  </footer>
+
+  <script src="mainscript.js"></script>
+</body>
 </html>
