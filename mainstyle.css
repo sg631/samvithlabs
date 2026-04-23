@@ -4,6 +4,9 @@
   padding: 0;
 }
 
+/* Explicit hidden rule — some older browsers don't apply it by default */
+[hidden] { display: none !important; }
+
 :root {
   --bg: #111;
   --surface: #1c1c1c;
@@ -33,6 +36,7 @@ body {
   right: 0;
   height: 56px;
   background: rgba(17, 17, 17, 0.9);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -111,6 +115,10 @@ body {
   overflow: hidden;
   margin: 2.5rem 2rem 0;
   border-radius: 16px;
+  /* Force GPU layer so overflow: hidden + border-radius clips correctly on Android */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  isolation: isolate;
 }
 
 .feat-slides {
@@ -120,13 +128,20 @@ body {
 }
 
 .feat-slide {
+  /* Expanded from inset: 0 for Chrome < 87 compatibility */
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   align-items: flex-end;
   opacity: 0;
   transition: opacity 0.85s ease;
   pointer-events: none;
+  will-change: opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .feat-slide.active {
@@ -136,7 +151,10 @@ body {
 
 .feat-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: linear-gradient(to top,
     rgba(0,0,0,0.88) 0%,
     rgba(0,0,0,0.35) 55%,
@@ -190,11 +208,13 @@ body {
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.95rem;
+  transition: background 0.2s, -webkit-transform 0.2s;
   transition: background 0.2s, transform 0.2s;
 }
 
 .feat-cta:hover {
   background: #9b8fff;
+  -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
 }
 
@@ -202,6 +222,7 @@ body {
   position: absolute;
   bottom: 1.75rem;
   left: 50%;
+  -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   display: flex;
   gap: 0.5rem;
@@ -216,17 +237,38 @@ body {
   border: none;
   cursor: pointer;
   padding: 0;
+  transition: background 0.3s, -webkit-transform 0.3s;
   transition: background 0.3s, transform 0.3s;
+  /* Minimum touch target size */
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.feat-dot.active {
+/* Dot visual is the ::after so we can keep large tap area */
+.feat-dot::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  transition: background 0.3s, -webkit-transform 0.3s;
+  transition: background 0.3s, transform 0.3s;
+  display: block;
+}
+
+.feat-dot.active::after {
   background: #fff;
+  -webkit-transform: scale(1.35);
   transform: scale(1.35);
 }
 
 .feat-arrow {
   position: absolute;
   top: 50%;
+  -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -241,25 +283,36 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.2s, -webkit-transform 0.2s;
   transition: background 0.2s, transform 0.2s;
 }
 
 .feat-arrow:hover {
   background: rgba(255, 255, 255, 0.18);
+  -webkit-transform: translateY(-50%) scale(1.05);
   transform: translateY(-50%) scale(1.05);
 }
 
 .feat-prev { left:  1.75rem; }
 .feat-next { right: 1.75rem; }
 
-/* SECTIONS */
+/* SECTIONS
+ * Using display: block (not flex) so position: sticky works correctly
+ * inside the column on Chrome for Android — a known flex+sticky bug.
+ */
 main {
   max-width: 900px;
   margin: 0 auto;
   padding: 4rem 2rem 6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
+  display: block;
+}
+
+main > section {
+  margin-bottom: 5rem;
+}
+
+main > section:last-child {
+  margin-bottom: 0;
 }
 
 section h2 {
@@ -283,6 +336,7 @@ section h2 {
   padding: 1.5rem;
   text-decoration: none;
   color: var(--text);
+  transition: background 0.2s, -webkit-transform 0.2s, border-color 0.2s;
   transition: background 0.2s, transform 0.2s, border-color 0.2s;
   display: flex;
   flex-direction: column;
@@ -292,6 +346,7 @@ section h2 {
 .card:hover {
   background: var(--surface-hover);
   border-color: var(--accent);
+  -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
 }
 
@@ -326,9 +381,11 @@ section h2 {
 }
 
 .tl-sticky {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh; /* adjusts for Android Chrome address bar */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -342,12 +399,16 @@ section h2 {
   height: 190px;
   flex-shrink: 0;
   align-items: stretch;
+  /* Smooth momentum scroll on iOS/Android */
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
 .tl-line-bg,
 .tl-line-fill {
   position: absolute;
   top: 50%;
+  -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   height: 2px;
   pointer-events: none;
@@ -373,6 +434,8 @@ section h2 {
   position: relative;
   z-index: 2;
   cursor: pointer;
+  /* Tap highlight on Android */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* DOT */
@@ -383,17 +446,20 @@ section h2 {
   border-radius: 50%;
   background: var(--border);
   box-shadow: 0 0 0 2px var(--bg);
+  transition: background 0.35s, -webkit-transform 0.35s, box-shadow 0.35s;
   transition: background 0.35s, transform 0.35s, box-shadow 0.35s;
 }
 
 .tl-item.active .tl-dot {
   background: var(--accent);
+  -webkit-transform: scale(1.7);
   transform: scale(1.7);
   box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent), 0 0 18px #7c6fff44;
 }
 
 .tl-item:hover:not(.active) .tl-dot {
   background: var(--muted);
+  -webkit-transform: scale(1.25);
   transform: scale(1.25);
 }
 
@@ -423,18 +489,22 @@ section h2 {
   justify-content: center;
   padding: 2rem 3rem;
   overflow: hidden;
+  min-height: 0; /* prevent flex overflow */
 }
 
 .tl-panel-inner {
   max-width: 620px;
   width: 100%;
   opacity: 0;
+  -webkit-transform: translateY(14px);
   transform: translateY(14px);
+  transition: opacity 0.35s ease, -webkit-transform 0.35s ease;
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .tl-panel-inner.show {
   opacity: 1;
+  -webkit-transform: translateY(0);
   transform: translateY(0);
 }
 
@@ -476,7 +546,13 @@ section h2 {
   text-transform: uppercase;
   flex-shrink: 0;
   transition: opacity 0.5s;
+  -webkit-animation: tl-bob 2s ease-in-out infinite;
   animation: tl-bob 2s ease-in-out infinite;
+}
+
+@-webkit-keyframes tl-bob {
+  0%, 100% { opacity: 0.3; -webkit-transform: translateY(0); transform: translateY(0); }
+  50%       { opacity: 0.8; -webkit-transform: translateY(4px); transform: translateY(4px); }
 }
 
 @keyframes tl-bob {
@@ -484,11 +560,11 @@ section h2 {
   50%       { opacity: 0.8; transform: translateY(4px); }
 }
 
-
-/* BUTTON — scoped to card buttons only so nav/carousel/dot buttons aren't affected */
+/* BUTTON */
 button {
   cursor: pointer;
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 main button {
@@ -500,12 +576,13 @@ main button {
   border-radius: 8px;
   font-size: 0.88rem;
   font-weight: 500;
+  transition: background 0.2s, -webkit-transform 0.15s;
   transition: background 0.2s, transform 0.15s;
   align-self: flex-start;
 }
 
-main button:hover  { background: #9b8fff; transform: translateY(-1px); }
-main button:active { transform: translateY(0); }
+main button:hover  { background: #9b8fff; -webkit-transform: translateY(-1px); transform: translateY(-1px); }
+main button:active { -webkit-transform: translateY(0); transform: translateY(0); }
 
 /* FOOTER */
 footer {
@@ -548,18 +625,34 @@ footer {
   .feat-arrow { display: none; }
 
   /* Main */
-  main { padding: 3rem 1.25rem 5rem; gap: 3.5rem; }
+  main { padding: 3rem 1.25rem 5rem; }
+  main > section { margin-bottom: 3.5rem; }
 
   /* Cards — single column */
   .card-grid { grid-template-columns: 1fr; }
 
   /* Timeline */
-  .tl-sticky { position: static; height: auto; overflow: visible; padding-top: 0; }
+  .tl-sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-top: 0;
+  }
   #timeline { height: auto !important; }
-  .tl-track { overflow-x: auto; height: 130px; scrollbar-width: none; }
+  .tl-track {
+    overflow-x: auto;
+    overflow-y: visible;
+    height: 130px;
+    scrollbar-width: none;
+  }
   .tl-track::-webkit-scrollbar { display: none; }
   .tl-item { min-width: 75px; }
-  .tl-panel { padding: 1.5rem 0; align-items: flex-start; min-height: 220px; }
+  .tl-panel {
+    padding: 1.5rem 0;
+    align-items: flex-start;
+    min-height: 220px;
+    overflow: visible;
+  }
   .tl-hint { display: none; }
 
   /* Panel text scale */
