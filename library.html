@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library — Samvith Labs</title>
+  <link rel="stylesheet" href="mainstyle.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@arraypress/waveform-player@latest/dist/waveform-player.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@arraypress/waveform-bar@latest/dist/waveform-bar.min.css" />
+  <link rel="icon" type="image/x-icon" href="samvithlabs-nobg.ico" />
+  <style>
+    /* ── Library layout ── */
+    #lib-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem 8rem;
+    }
+
+    #lib-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    #lib-header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    #lib-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.25rem;
+    }
+
+    .lib-tab {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border-radius: 7px;
+      transition: background 0.18s, color 0.18s;
+      cursor: pointer;
+    }
+
+    .lib-tab.active {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    /* ── Song grid ── */
+    #song-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+
+    .song-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: background 0.2s, border-color 0.2s, -webkit-transform 0.2s;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      /* Reset any inherited button styles */
+      text-align: left;
+      width: 100%;
+      font-family: inherit;
+    }
+
+    .song-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--accent);
+      -webkit-transform: translateY(-2px);
+      transform: translateY(-2px);
+    }
+
+    .song-art {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #1a0a2e, #0a0614);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      margin-bottom: 0.25rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .song-art img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .song-play-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.45);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.18s;
+    }
+
+    .song-card:hover .song-play-overlay {
+      opacity: 1;
+    }
+
+    .song-play-overlay svg {
+      color: #fff;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.6));
+    }
+
+    .song-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-album {
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .song-artist {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .lib-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: var(--muted);
+      padding: 3rem 0;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      #lib-page { padding: 5rem 1rem 8rem; }
+      #song-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+      #lib-header { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div id="nav-logo"><a href="/" style="color:inherit;text-decoration:none;">Samvith Labs</a></div>
+    <div id="nav-links">
+      <a href="/">Home</a>
+      <a href="/#music">Music</a>
+    </div>
+    <button id="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+
+  <div id="lib-page">
+    <div id="lib-header">
+      <h1 id="lib-title">Library</h1>
+      <div id="lib-tabs">
+        <button class="lib-tab" data-filter="released">Released</button>
+        <button class="lib-tab" data-filter="unreleased">Unreleased</button>
+      </div>
+    </div>
+    <div id="song-grid"></div>
+  </div>
+
+  <script src="https://unpkg.com/@arraypress/waveform-player@latest/dist/waveform-player.min.js"></script>
+  <script src="https://unpkg.com/@arraypress/waveform-bar@latest/dist/waveform-bar.min.js"></script>
+  <script>
+    // ── Song catalogue ──────────────────────────────────────────────────────
+    // Add songs here. art: path to image or null to use artEmoji.
+    var SONGS = [
+      {
+        id:       'overcome',
+        title:    'overcome',
+        artist:   'smv1t',
+        album:    'Single',
+        url:      'sickchords-volume-adjusted.wav',
+        art:      null,
+        artEmoji: '🎵',
+        type:     'released'
+      }
+      // { id: 'demo1', title: '...', artist: 'smv1t', album: '...', url: '...', artEmoji: '🔒', type: 'unreleased' }
+    ];
+
+    // ── State ───────────────────────────────────────────────────────────────
+    var currentFilter = 'released';
+    var bar = null;
+
+    // ── URL param ───────────────────────────────────────────────────────────
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('filter') === 'unreleased') currentFilter = 'unreleased';
+
+    // ── Nav toggle ──────────────────────────────────────────────────────────
+    var navToggle = document.getElementById('nav-toggle');
+    var navLinks  = document.getElementById('nav-links');
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', function () { navLinks.classList.toggle('open'); });
+      navLinks.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') navLinks.classList.remove('open');
+      });
+    }
+
+    // ── WaveformBar init ────────────────────────────────────────────────────
+    bar = WaveformBar.init({
+      theme:         'dark',
+      waveformStyle: 'bars',
+      waveformHeight: 36,
+      continuous:    true,
+      showQueue:     true,
+      showPrevNext:  true,
+      showVolume:    true,
+      showMeta:      true,
+      showTime:      true,
+      persist:       true
+    });
+
+    // ── Render grid ─────────────────────────────────────────────────────────
+    function renderGrid(filter) {
+      var grid     = document.getElementById('song-grid');
+      var titleEl  = document.getElementById('lib-title');
+      var filtered = SONGS.filter(function (s) { return s.type === filter; });
+
+      titleEl.textContent = filter === 'released' ? 'Released' : 'Unreleased';
+      grid.innerHTML = '';
+
+      if (!filtered.length) {
+        var empty = document.createElement('div');
+        empty.className = 'lib-empty';
+        empty.textContent = 'Nothing here yet.';
+        grid.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(function (song) {
+        var card = document.createElement('div');
+        card.className = 'song-card';
+
+        // WaveformBar data attributes — clicking this element triggers the bar
+        card.setAttribute('data-wb-play',    '');
+        card.setAttribute('data-wb-id',      song.id);
+        card.setAttribute('data-wb-url',     song.url);
+        card.setAttribute('data-wb-title',   song.title);
+        card.setAttribute('data-wb-artist',  song.artist);
+        card.setAttribute('data-wb-album',   song.album);
+        if (song.art) card.setAttribute('data-wb-artwork', song.art);
+
+        var artHTML = song.art
+          ? '<img src="' + song.art + '" alt="' + song.title + ' artwork" />'
+          : song.artEmoji || '🎵';
+
+        card.innerHTML =
+          '<div class="song-art">' +
+            artHTML +
+            '<div class="song-play-overlay">' +
+              '<svg viewBox="0 0 24 24" fill="currentColor" width="36" height="36"><path d="M8 5v14l11-7z"/></svg>' +
+            '</div>' +
+          '</div>' +
+          '<div class="song-name">' + song.title + '</div>' +
+          '<div class="song-album">' + song.album + '</div>' +
+          '<div class="song-artist">' + song.artist + '</div>';
+
+        grid.appendChild(card);
+      });
+
+      // Let WaveformBar pick up newly rendered data-wb-play elements
+      if (bar && bar.refresh) bar.refresh();
+    }
+
+    // ── Tab switching ────────────────────────────────────────────────────────
+    function setTab(filter) {
+      currentFilter = filter;
+      var tabs = document.querySelectorAll('.lib-tab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.toggle('active', tabs[i].getAttribute('data-filter') === filter);
+      }
+      renderGrid(filter);
+      history.replaceState(null, '', window.location.pathname + '?filter=' + filter);
+    }
+
+    var tabs = document.querySelectorAll('.lib-tab');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].addEventListener('click', function () { setTab(this.getAttribute('data-filter')); });
+    }
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+    setTab(currentFilter);
+  </script>
+
+</body>
+</html>

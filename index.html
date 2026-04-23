@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Samvith Labs</title>
   <link rel="stylesheet" href="mainstyle.css" />
-  <link rel="stylesheet" href="https://unpkg.com/@arraypress/waveform-player@latest/dist/waveform-player.css" />
   <link rel="icon" type="image/x-icon" href="samvithlabs-nobg.ico" />
 </head>
 <body>
@@ -205,17 +204,18 @@
     <section id="music">
       <h2>Music</h2>
       <p style="color:var(--muted);margin-bottom:1.5rem;">Releases under <code>smv1t</code></p>
-
-      <div data-waveform-player
-           data-url="sickchords-volume-adjusted.wav"
-           data-title="overcome"
-           data-subtitle="smv1t"
-           data-waveform-style="bars"
-           data-color-preset="dark"
-           data-show-time="true"
-           data-samples="80">
+      <div class="card-grid" style="max-width:420px;">
+        <a class="card" href="library.html?filter=released">
+          <div class="card-icon">🎵</div>
+          <h3>Released</h3>
+          <p>Published tracks</p>
+        </a>
+        <a class="card" href="library.html?filter=unreleased">
+          <div class="card-icon">🔒</div>
+          <h3>Unreleased</h3>
+          <p>Demos &amp; previews</p>
+        </a>
       </div>
-
     </section>
 
   </main>
@@ -224,7 +224,6 @@
     <p>&copy; 2026 Samvith Labs</p>
   </footer>
 
-  <script src="https://unpkg.com/@arraypress/waveform-player@latest/dist/waveform-player.min.js"></script>
   <script src="mainscript.js"></script>
 </body>
 </html>
