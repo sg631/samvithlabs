@@ -12,7 +12,9 @@
   <nav id="navbar">
     <div id="nav-logo">Samvith Labs</div>
     <div id="nav-links">
+      <a href="#featured">Featured</a>
       <a href="#links">Links</a>
+      <a href="#timeline">Timeline</a>
       <a href="#work">Work</a>
     </div>
     <button id="nav-toggle" aria-label="Toggle menu">&#9776;</button>
@@ -23,6 +25,46 @@
     <h1>Samvith Labs</h1>
     <p>Building games, music, and projects.</p>
   </header>
+
+  <section id="featured">
+
+    <div class="feat-slides">
+
+      <div class="feat-slide active" style="background: linear-gradient(135deg, #0c0818 0%, #1a0a2e 45%, #0a0614 100%)">
+        <div class="feat-overlay"></div>
+        <div class="feat-content">
+          <span class="feat-tag">smv1t &mdash; new single</span>
+          <h2 class="feat-title">overcome</h2>
+          <p class="feat-desc">My first single is finally here. Add yourself to the email list to be notified the moment it drops.</p>
+          <div class="feat-actions">
+            <a href="https://distrokid.com/hyperfollow/smv1t/overcome?ref=release" target="_blank" class="feat-cta">Join the waitlist &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-slide" style="background: linear-gradient(135deg, #0a1220 0%, #0d2040 45%, #080e18 100%)">
+        <div class="feat-overlay"></div>
+        <div class="feat-content">
+          <span class="feat-tag">now live</span>
+          <h2 class="feat-title">Skillmesa</h2>
+          <p class="feat-desc">A platform for teens to offer local services — tutoring, lawn care, and more. Free to join.</p>
+          <div class="feat-actions">
+            <a href="https://skillmesa.com" target="_blank" class="feat-cta">Explore Skillmesa &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="feat-dots" id="feat-dots">
+      <button class="feat-dot active" data-index="0"></button>
+      <button class="feat-dot" data-index="1"></button>
+    </div>
+
+    <button class="feat-arrow feat-prev" id="feat-prev">&#8249;</button>
+    <button class="feat-arrow feat-next" id="feat-next">&#8250;</button>
+
+  </section>
 
   <main>
 
@@ -61,6 +103,78 @@
           <h3>samvithlabs</h3>
           <p>My itch.io page</p>
         </a>
+
+      </div>
+    </section>
+
+    <section id="timeline">
+      <div class="tl-sticky">
+
+        <div class="tl-track">
+          <div class="tl-line-bg"></div>
+          <div class="tl-line-fill" id="tl-fill"></div>
+
+          <div class="tl-item tl-below">
+            <div class="tl-year">2018</div>
+            <div class="tl-dot"></div>
+            <div class="tl-content" hidden>
+              <h3>The Beginning of a Career</h3>
+              <p>I began programming when I was 6 years old with Scratch and Minecraft commands, which sparked my love for rationality and logic dating back to even my love of puzzles as a toddler.</p>
+            </div>
+          </div>
+
+          <div class="tl-item tl-above">
+            <div class="tl-year">2020</div>
+            <div class="tl-dot"></div>
+            <div class="tl-content" hidden>
+              <h3>Webdev and Music</h3>
+              <p>Around age 8 years old, I started learning to play the piano, and began my career in web development at this time, learning the fundamentals of HTML, CSS, and JavaScript.</p>
+            </div>
+          </div>
+
+          <div class="tl-item tl-below">
+            <div class="tl-year">2022</div>
+            <div class="tl-dot"></div>
+            <div class="tl-content" hidden>
+              <h3>Singing and Robotics</h3>
+              <p>At 10 years old, I started taking instruction for singing and started to involve myself more in music. I began to explore music composition, messing around with different DAWs until I settled upon LMMS with the idea that I would eventually switch to FL Studio. This was also the first year of doing First Lego League with a team.</p>
+            </div>
+          </div>
+
+          <div class="tl-item tl-above">
+            <div class="tl-year">2024</div>
+            <div class="tl-dot"></div>
+            <div class="tl-content" hidden>
+              <h3>Guitar and CAC</h3>
+              <p>At 12 years old, I started learning to play the guitar at the same place I was learning singing. I found it fun and easier than piano. This was the first year I participated in the annual Congressional App Challenge, started looking into React and development with modern frameworks, and was performing at many different events.</p>
+            </div>
+          </div>
+
+          <div class="tl-item tl-below">
+            <div class="tl-year">2025</div>
+            <div class="tl-dot"></div>
+            <div class="tl-content" hidden>
+              <h3>React and Skillmesa</h3>
+              <p>This was the first fully released project, initially created for the 2025 Congressional App Challenge. It was also the first project I made using React. Despite making numerous prototypes of various projects to different levels of completion, I had never actually finished one of my projects before this.</p>
+            </div>
+          </div>
+
+          <div class="tl-item tl-above">
+            <div class="tl-year">2026</div>
+            <div class="tl-dot"></div>
+            <div class="tl-content" hidden>
+              <h3>smv1t</h3>
+              <p>Up to this point, I had been making music for quite a while, but had never actually released anything. I finally released my first single (overcome) in 2026, and made significant improvement to Skillmesa. I have also completely redesigned the UI, and want to take a look at some of my abandoned projects and breathe life back into them. I am currently participating in the Gamedev.js gamejam, and we'll see how it goes!</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tl-panel">
+          <div class="tl-panel-inner" id="tl-panel-inner"></div>
+        </div>
+
+        <div class="tl-hint">scroll to explore ↓</div>
 
       </div>
     </section>
