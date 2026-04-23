@@ -198,3 +198,11 @@ if (navToggle && navLinks) {
     }
   });
 })();
+
+// ─── WaveformPlayer / WaveformBar ────────────────────────────────────────────
+if (typeof WaveformPlayer !== 'undefined') {
+  WaveformPlayer.init();
+}
+if (typeof WaveformBar !== 'undefined') {
+  WaveformBar.init();
+}
